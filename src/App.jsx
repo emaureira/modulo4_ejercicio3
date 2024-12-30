@@ -3,6 +3,7 @@ import './App.css';
 import DoctorCard from './component/DoctorCard';
 import ServiceList from './component/ServiceList';
 import ApoinmentForm from './component/AppointmentForm';
+import { BrowserRouter as Router, Route, Routes, Link } from 'react-router';
 
 // 1. Crear el Context
 const HospitalContext = createContext();
@@ -11,72 +12,31 @@ export { HospitalContext };
 function App() {
   const [doctores, setDoctores] = useState([]);
   const [servicios, setServicios] = useState([]);
+  const [loadingDoctores, setLoadingDoctores] = useState(true); // estado para loading
+  const [errorDoctores, setErrorDoctores] = useState(null); // estado para error
 
   useEffect(() => {
-    // Simulando una carga de datos (puedes reemplazar esto con una llamada a una API)
-    const doctoresData = [
-      {
-        id: 1,
-        nombre: 'Doctor 1',
-        experiencia: ' 5 años',
-        descripcion: 'Descripcion del doctor 1 que tiene 5 años de experiencia y sabemos que no tiene experiencia',
-        especialidad: 'Broncopulmonar'
-      },
-      {
-        id: 2,
-        nombre: 'Doctor 2',
-        experiencia: '3 años',
-        descripcion: 'Descripcion del doctor 2 que tiene 3 años de experiencia',
-        especialidad: 'Pediatria'
-      },
-      {
-        id: 3,
-        nombre: 'Doctor 3',
-        experiencia: ' 5 años',
-        descripcion: 'Descripcion del doctor 3 que tiene 5 años de experiencia y sabemos que no tiene experiencia',
-        especialidad: 'Examenes'
-      },
-      {
-        id: 4,
-        nombre: 'Doctor 4',
-        experiencia: '9 años',
-        descripcion: 'Descripcion del doctor 4 que tiene 9 años de experiencia',
-        especialidad: 'Imagen'
-      },
-      {
-        id: 5,
-        nombre: 'Doctor 5',
-        experiencia: '9 años',
-        descripcion: 'Descripcion del doctor 4 que tiene 9 años de experiencia',
-        especialidad: 'Kinesiologia'
-      },
-      {
-        id: 6,
-        nombre: 'Doctor 6',
-        experiencia: '9 años',
-        descripcion: 'Descripcion del doctor 4 que tiene 9 años de experiencia',
-        especialidad: 'Broncopulmonar'
-      },
-      {
-        id: 7,
-        nombre: 'Doctor 7',
-        experiencia: '5 años',
-        descripcion: 'Descripcion del doctor 4 que tiene 9 años de experiencia',
-        especialidad: 'Pediatria'
-      },
-      {
-        id: 8,
-        nombre: 'Doctor 8',
-        experiencia: '9',
-        descripcion: 'Descripcion del doctor 8 que tiene 9 años de experiencia',
-        especialidad: 'Examenes'
+    const fetchDoctores = async () => {
+      try {
+        const response = await fetch('/doctores.json'); // Ruta a tu archivo json
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        const data = await response.json();
+        setDoctores(data.doctores);
+      } catch (err) {
+        setErrorDoctores(err.message);
+      } finally {
+        setLoadingDoctores(false)
       }
-    ];
+    };
 
-    const serviciosData = ['Broncopulmonar', 'Pediatria', 'Examenes', 'Imagen', 'Kiniseologia'];
+    fetchDoctores();
+
+    const serviciosData = ['Broncopulmonar', 'Pediatria', 'Examenes', 'Imagen', 'Kiniseologia','Pies'];
 
     // Establecer los datos en el estado
-    setDoctores(doctoresData);
+    
     setServicios(serviciosData);
   }, []);
 
@@ -84,6 +44,13 @@ function App() {
     doctores,
     servicios,
   };
+
+  if (loadingDoctores) {
+    return <div>Cargando doctores...</div>;
+  }
+  if (errorDoctores) {
+    return <div>Error al cargar los doctores: {errorDoctores}</div>;
+  }
 
   return (
     // 2. Proveer el Context
