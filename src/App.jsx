@@ -55,8 +55,25 @@ function App() {
   return (
     // 2. Proveer el Context
     <HospitalContext.Provider value={hospitalData}>
-      <>
-        <h1>Hospital</h1>
+      <Router>
+        <nav>
+          <Link to="/" className='mx-4'>Inicio</Link>
+          <Link to="/servicios" className='mx-4'>Servicios</Link>
+          <Link to="/citas" className='mx-4'>Citas</Link>
+        </nav>
+        <Routes>
+          <Route path="/" element={<HomePage doctores={doctores} />} />
+          <Route path="/servicios" element={<ServicesPage servicios={servicios} />} />
+          <Route path="/citas" element={<AppointmentsPage doctores={doctores} />} />
+        </Routes>
+        </Router>
+        </HospitalContext.Provider>
+  );
+}
+function HomePage({doctores}){
+  return(
+    <>
+    <h1>Hospital</h1>
         <section className="container">
           <div className='row g-4'>
             {doctores.map(({ id, nombre, experiencia, descripcion, especialidad }) => (
@@ -65,26 +82,32 @@ function App() {
             )}
           </div>
         </section>
+    </>
+  );
+}
 
-        <section className='container my-3'>
-          <h2>Servicios Médicos</h2>
-          <p>Conoce nuestra variedad de servicios médicos</p>
-          <ul className="list-group">
-            {servicios.map((servicio, index) => (
-              <ServiceList key={index} servicio={servicio} />
-            ))}
-          </ul>
-        </section>
+function ServicesPage({servicios}){
+  return(
+    <section className='container my-3'>
+    <h2>Servicios Médicos</h2>
+    <p>Conoce nuestra variedad de servicios médicos</p>
+    <ul className="list-group">
+      {servicios.map((servicio, index) => (
+        <ServiceList key={index} servicio={servicio} />
+      ))}
+    </ul>
+  </section>
+  );
+}
+function AppointmentsPage({ doctores }) {
+  return (
 
         <section>
           <h2>Reservar Cita</h2>
           <ApoinmentForm doctores={doctores} />
         </section>
-      </>
-    </HospitalContext.Provider>
-  );
-}
-
+        );
+      }
 export default App;
 
 
