@@ -1,3 +1,15 @@
+**Implementación de Vistas Complejas con ReactJS**
+Se crea una sub carpeta de view y se agrega react-router-dom utilizando BrowserRouter, Routes, Route
+para simular distintas rutas y paginas
+
+**Se utiliza Fragment**
+Según el componente se utiliza fragment para un mejor uso del dom virtual y la renderización
+
+** API **
+Se utiliza api fetch para la carga del equipo medico llamando al archivo data.json el cual contiene dos arreglos de objetos uno Equipomedico y Otro Servicios
+
+tambien se utiliza el archivo data.json como api para la vista de Cita, de esta manera el formulario solo trae los doctores segun la especialidad que se encuentra en el arreglo Servicios
+
 **Componente Citas - Optimización de Rendimiento**
 
 Este componente React (Citas) implementa un formulario para agendar citas médicas. Se ha priorizado la optimización del rendimiento, especialmente al manejar grandes volúmenes de datos para la lista de doctores y servicios.
