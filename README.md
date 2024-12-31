@@ -5,7 +5,7 @@ para simular distintas rutas y paginas
 **Se utiliza Fragment**
 Según el componente se utiliza fragment para un mejor uso del dom virtual y la renderización
 
-** API **
+**API**
 Se utiliza api fetch para la carga del equipo medico llamando al archivo data.json el cual contiene dos arreglos de objetos uno Equipomedico y Otro Servicios
 
 tambien se utiliza el archivo data.json como api para la vista de Cita, de esta manera el formulario solo trae los doctores segun la especialidad que se encuentra en el arreglo Servicios
