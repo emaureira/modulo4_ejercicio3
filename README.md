@@ -1,4 +1,4 @@
-Componente Citas - Optimización de Rendimiento
+**Componente Citas - Optimización de Rendimiento**
 
 Este componente React (Citas) implementa un formulario para agendar citas médicas. Se ha priorizado la optimización del rendimiento, especialmente al manejar grandes volúmenes de datos para la lista de doctores y servicios.
 
